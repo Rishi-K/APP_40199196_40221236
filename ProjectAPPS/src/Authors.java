@@ -1,15 +1,15 @@
 import java.util.List;
 
 public class Authors {
-	private String bio;
+	
 	private String birth_date;
 	private String links;
 	private String key;
 	private String name;
 	private long saleCount;
 
-	public Authors(String key, String name, String bio, String birth_date, String links ){
-		this.bio = bio;
+	public Authors(String key, String name, String birth_date, String links ){
+		
 		this.birth_date = birth_date;
 		this.links = links;
 		this.key = key;
@@ -19,7 +19,7 @@ public class Authors {
 	}
 	
 	public Authors( String key, String name ){
-		this.bio = "";
+		
 		this.birth_date = "";
 		this.links = "";
 		this.key = key;
@@ -29,9 +29,7 @@ public class Authors {
 	}
 	
 	//accessor methods
-	public String getBio(){
-		return this.bio;
-	}
+	
 	public String getName(){
 		return this.name;
 	}
@@ -55,9 +53,7 @@ public class Authors {
 	public void setKey(String key) {
 		this.key = key;
 	}
-	public void setBio(String bio) {
-		this.bio = bio;
-	}
+	
 	public void setBirthDate(String birthDate) {
 		this.birth_date = birthDate;
 	}

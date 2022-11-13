@@ -36,26 +36,16 @@ public class OpenLibraryDriver {
 		// TODO Auto-generated method stub
 		
 		// script to read data for authors api
-//		APIReader areader = new APIReader();
-//		areader.readBookAPI();
-		
 		Connection conn = OpenLibraryDriver.getConnection();
 		
+		APIReader areader = new APIReader();
+		Books book = areader.readBookAPI();
+		Authors author = areader.readAuthorAPI();
+		System.out.println("------------------------------------------");
 		
-//		User aUser = new User(1154567, "Samira Shah", "ss426@");
-		UsersController uc = new UsersController();
-//		uc.insert(aUser, conn);
-		User aUser = (User) uc.read(Integer.toString(21474837), conn);
-		System.out.println(aUser.getId()+" "+aUser.getName()+" "+ aUser.getPassword());
-		System.out.println();
+
 		
-		aUser.setName("Ricki_c");
-		uc.update(aUser, null, null, conn);
 		
-		aUser = (User) uc.read(Integer.toString(21474837), conn);
-		System.out.println(aUser.getId()+" "+aUser.getName()+" "+ aUser.getPassword());
-		
-//		uc.delete(Integer.toString(21474836), conn);
 		
 	}
 

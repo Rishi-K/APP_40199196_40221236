@@ -104,6 +104,8 @@ public class APIReader {
 			    
 			    try {
 			    	bio = (String) data_obj.get("bio");
+			    	bio = bio.replace("\"","");
+			    	bio = bio.replace("\'","");
 				    System.out.println("bio: "+ bio);
 			    	
 			    }catch(Exception e) {
@@ -249,7 +251,7 @@ public class APIReader {
 			return null;
 		}
 		else {
-			Authors author = new Authors(key_obj , Name_obj , bio, dob_obj, links_combined );
+			Authors author = new Authors(key_obj.split("/")[2] , Name_obj , dob_obj, links_combined );
 			return author;
 		}
 		
@@ -437,7 +439,7 @@ public class APIReader {
 					    System.out.println("name: "+ name_obj);
 					    
 					    key_obj = (String) data_obj.get("key");
-					    System.out.println("key: "+ key_obj);
+					    System.out.println("key: "+ key_obj.split("/")[2]);
 				    	
 				    }catch(Exception e) {
 				    	cflag = false;
@@ -527,8 +529,8 @@ public class APIReader {
 			return null;
 		}
 		else {
-			//Subjects subject = new Subjects(key_obj , name_obj , workCount );
-			return null;
+			Books book = new Books(key_obj.split("/")[2], name_obj, author.split("/")[2], publisher ,isbn,(int)pageCount, language.split("/")[2], publish_date);
+			return book;
 		}
 		
 		

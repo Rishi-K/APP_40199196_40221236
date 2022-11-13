@@ -87,7 +87,7 @@ public class UsersController implements Controller {
 			
 		}catch(Exception e) {
 			System.out.println("could not read data");
-			return usr;			
+			return null;			
 		}
 		return usr;
 		
