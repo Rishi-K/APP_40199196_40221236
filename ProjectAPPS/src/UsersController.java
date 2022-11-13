@@ -18,12 +18,19 @@ public class UsersController implements Controller {
 	public boolean insert( Object obj, Connection conn ) {
 		// TODO Auto-generated method stub
 		User usr = (User) obj;
-		System.out.println(usr.getPassword());
-		System.out.println(usr.getId());
-		System.out.println(usr.getName());
-		usr.setName("RK");
-		System.out.println(usr.getName());
-		return false;
+		try {
+			String query = "INSERT INTO User( id, name, password ) VALUES ("+ usr.getId()+", '"+ usr.getName()+"', '"+usr.getPassword()+"');";
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
+			
+			
+		}catch(Exception e) {
+			System.out.println("could not insert data");
+			
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
 	}
 	
 	@Override
@@ -44,7 +51,19 @@ public class UsersController implements Controller {
 	public boolean read(Object obj, Connection conn) {
 		// TODO Auto-generated method stub
 		User usr = (User) obj;
-		return false;
+		try {
+			String query = "SELECT id, name, password FROM User where id="+usr.getId()+";";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				System.out.println(rs.getString("id")+" "+rs.getString("name")+" "+rs.getString("password"));
+			}
+			
+		}catch(Exception e) {
+			System.out.println("could not read data");
+			return false;			
+		}
+		return true;
 	}
 
 }

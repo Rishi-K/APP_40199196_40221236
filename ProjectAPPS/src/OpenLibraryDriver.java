@@ -42,32 +42,11 @@ public class OpenLibraryDriver {
 		Connection conn = OpenLibraryDriver.getConnection();
 		
 		
-		try {
-			String query = "INSERT INTO User( id, name, password ) VALUES ( 21474837, 'Rick Famiyawa', 'rk401@');";
-			Statement stmt = conn.createStatement();
-			stmt.executeQuery(query);
-			
-			
-		}catch(Exception e) {
-			System.out.println("could not read data");
-			System.out.println(e.getMessage());
-		}
+		User aUser = new User(2054567, "Mira Grant", "rk626@");
+		UsersController uc = new UsersController();
+		uc.insert(aUser, conn);
+		uc.read(aUser, conn);
 		
-		try {
-			String query = "SELECT id FROM User";
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while(rs.next()) {
-				System.out.println(rs.getString("id"));
-			}
-			
-		}catch(Exception e) {
-			System.out.println("could not read data");
-		}
-		
-			
-		
-
 	}
 
 }
