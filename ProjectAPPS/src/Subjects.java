@@ -3,6 +3,20 @@ public class Subjects {
     public String name;
     public long workCount;
     
+    
+    
+    public Subjects(String key, String name, long workCOunt) {
+    	this.key = key;
+    	this.name = name;
+    	this.workCount = workCount;
+    }
+    
+    public Subjects(String key, String name) {
+    	this.key = key;
+    	this.name = name;
+    	this.workCount = 0;
+    }
+    
     //accessor methods
     public String getKey() {
     	return this.key;

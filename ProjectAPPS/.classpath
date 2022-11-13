@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Admin/eclipse-workspace/ProjectAPPS/sqlite-jdbc-3.39.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Admin/eclipse-workspace/ProjectAPPS/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Admin/git/repository/ProjectAPPS/json-simple-1.1.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Admin/git/repository/ProjectAPPS/sqlite-jdbc-3.39.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

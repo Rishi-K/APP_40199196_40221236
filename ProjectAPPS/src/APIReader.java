@@ -1,41 +1,14 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
-import org.sqlite.SQLiteDataSource;
 
-public class TempHolder {
+public class APIReader {
 	
-	public static void temp() {
-		//connection to the database
-		Connection c = null;
-		try {
-			SQLiteDataSource ds = new SQLiteDataSource();
-			ds.setUrl("jdbc:sqlite:C:\\Users\\Admin\\eclipse-workspace\\ProjectAPPS\\jobs.db");
-			Connection conn = ds.getConnection();
-			System.out.println("Connection created");
-			
-			String query = "SELECT * FROM Company";
-			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery(query);
-			while(rs.next()) {
-				System.out.println(rs.getString("Location"));
-			}
-			
-		} catch(Exception e) {
-			System.out.println("error catching");
-			System.out.println(e.getMessage());
-		}
-		
-		
-		//code to read Authors API
-		//declare and initializ all data holder variables
+	public Authors readAuthorAPI() {
 		boolean cflag = true;
 		JSONObject data_obj=null;
 		String bio="";
@@ -48,7 +21,9 @@ public class TempHolder {
 		String title_obj="";
 		String dob_obj="";
 		JSONArray links=null;
+		String links_combined = "";
 		JSONArray alternateNames=null;
+		String aNames_combined = "";
 			
 		String wikidata;
 		String isni;
@@ -107,7 +82,7 @@ public class TempHolder {
 					    System.out.println("name: "+ Name_obj);
 					    
 					    key_obj = (String) data_obj.get("key");
-					    System.out.println("key: "+ key_obj);
+					    System.out.println("key: "+ key_obj.split("/")[1]);
 				    	
 				    }catch(Exception e) {
 				    	cflag = false;
@@ -240,8 +215,9 @@ public class TempHolder {
 				    	System.out.println("title: "+current_link.get("title"));
 				    	System.out.println("url: "+current_link.get("url"));
 				    	System.out.println();
-				    	
+				    	links_combined+=current_link.get("title")+": "+ current_link.get("url")+"; ";
 				    }
+				    links_combined = links_combined.trim();
 			    	
 			    }catch(Exception e) {
 			    	
@@ -253,7 +229,9 @@ public class TempHolder {
 				    System.out.println("Alternate Names are: ");
 				    for(int i=0; i< alternateNames.size(); i++) {
 				    	System.out.println(alternateNames.get(i));
+				    	aNames_combined+= alternateNames.get(i)+"; ";
 				    }
+				    aNames_combined = aNames_combined.trim();
 			    	
 			    }catch(Exception e) {
 			    	
@@ -267,8 +245,122 @@ public class TempHolder {
 			
 		}
 		
-		
+		if (cflag== false) {
+			return null;
+		}
+		else {
+			Authors author = new Authors(key_obj , Name_obj , bio, dob_obj, links_combined );
+			return author;
+		}
 		
 	}
+	
+	// reading api to get Subject data;
+	
+	public Subjects readSubjectAPI() {
+		boolean cflag = true;
+		JSONObject data_obj=null;
+		URL url =null;
+		
+		String name_obj="";
+		String key_obj="";
+		long workCount = 0;
+			
+		try {
+			String base_url = "https://openlibrary.org/";
+			String api = "subjects/";
+			String api_key = "love" +".json";
+			url = new URL(base_url+api+api_key);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+
+			//Getting the response code
+			int responsecode = conn.getResponseCode();
+			System.out.println(responsecode);
+			
+			if (responsecode != 200) {
+			    
+			    cflag = false;
+			} 
+			
+		}catch(Exception e) {
+			cflag = false;
+		}
+		
+		try {
+			if (cflag == true){
+				  
+				String inline = "";
+				Scanner scanner = new Scanner(url.openStream());
+				  
+				//Write all the JSON data into a string using a scanner
+				while (scanner.hasNext()) {
+					inline += scanner.nextLine();
+				}
+				    
+				//Close the scanner
+				scanner.close();
+				    
+				System.out.println(inline);
+
+				    //Using the JSON simple library parse the string into a json object
+				    
+				    try {
+				    	JSONParser parser = new JSONParser();
+					    data_obj = (JSONObject) parser.parse(inline);
+					    System.out.println("could reach here");
+					    name_obj = (String) data_obj.get("name");
+					    System.out.println("name: "+ name_obj);
+					    
+					    key_obj = (String) data_obj.get("key");
+					    System.out.println("key: "+ key_obj);
+					    
+					    
+				    	
+				    }catch(Exception e) {
+				    	cflag = false;
+				    	
+				    }
+				}
+				else {
+					System.out.println("ending the creation of Author object. There was an error reading the api.");
+					
+				}
+			
+		}catch(Exception e) {
+			cflag=false;
+		}
+		
+		try {	
+			if(cflag==true) {
+			    
+			    try {
+			    	workCount = (long) data_obj.get("work_count");
+				    System.out.println("workCount: "+ workCount);
+			    	
+			    }catch(Exception e) {
+			    	workCount = 0;
+			    }		    
+			    
+			}
+		}catch(Exception e) {
+			System.out.println("Error in reading non essential data. Proceeding wihtout them");
+			
+		}
+		
+		if (cflag== false) {
+			return null;
+		}
+		else {
+			Subjects subject = new Subjects(key_obj , name_obj , workCount );
+			return subject;
+		}		
+		
+	}
+	
+	
+	
 
 }

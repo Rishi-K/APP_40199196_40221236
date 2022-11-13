@@ -8,7 +8,7 @@ public class Authors {
 	private String name;
 	private long saleCount;
 
-	public Authors(String bio, String birth_date, String links, String key, String name){
+	public Authors(String key, String name, String bio, String birth_date, String links ){
 		this.bio = bio;
 		this.birth_date = birth_date;
 		this.links = links;
@@ -18,7 +18,7 @@ public class Authors {
 	 
 	}
 	
-	public Authors( String key, String name){
+	public Authors( String key, String name ){
 		this.bio = "";
 		this.birth_date = "";
 		this.links = "";
