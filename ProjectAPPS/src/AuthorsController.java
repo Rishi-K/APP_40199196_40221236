@@ -28,17 +28,17 @@ public class AuthorsController implements Controller{
 	}
 
 	@Override
-	public boolean delete(Object obj, Connection conn) {
+	public boolean delete(String key, Connection conn) {
 		// TODO Auto-generated method stub
-		Authors author = (Authors) obj;
+		
 		return false;
 	}
 
 	@Override
-	public boolean read(Object obj, Connection conn) {
+	public Object read(String key, Connection conn) {
 		// TODO Auto-generated method stub
-		Authors author = (Authors) obj;
-		return false;
+		
+		return null;
 	}
 	
 	public String[] getAuthorLists(Connection conn) {

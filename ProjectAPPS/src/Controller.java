@@ -13,7 +13,7 @@ import org.sqlite.SQLiteDataSource;
 public interface Controller {
 	public boolean insert( Object obj, Connection conn );
 	public boolean update( Object obj, String column ,String value, Connection conn );
-	public boolean delete( Object obj, Connection conn);
-	public boolean read( Object obj, Connection conn);
+	public boolean delete( String key, Connection conn);
+	public Object read( String key, Connection conn);
 
 }

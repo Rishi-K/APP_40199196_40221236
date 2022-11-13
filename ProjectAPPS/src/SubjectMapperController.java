@@ -28,16 +28,16 @@ public class SubjectMapperController implements Controller {
 	}
 
 	@Override
-	public boolean delete(Object obj, Connection conn) {
+	public boolean delete(String key, Connection conn) {
 		// TODO Auto-generated method stub
-		SubjectMapper smap = (SubjectMapper) obj;
+		
 		return false;
 	}
 
 	@Override
-	public boolean read(Object obj, Connection conn) {
+	public Object read(String key, Connection conn) {
 		// TODO Auto-generated method stub
-		SubjectMapper smap = (SubjectMapper) obj;
+		
 		return false;
 	}
 

@@ -42,10 +42,13 @@ public class OpenLibraryDriver {
 		Connection conn = OpenLibraryDriver.getConnection();
 		
 		
-		User aUser = new User(2054567, "Mira Grant", "rk626@");
+//		User aUser = new User(1154567, "Samira Shah", "ss426@");
 		UsersController uc = new UsersController();
-		uc.insert(aUser, conn);
-		uc.read(aUser, conn);
+//		uc.insert(aUser, conn);
+		User aUser = (User) uc.read(Integer.toString(21474837), conn);
+		System.out.println(aUser.getId()+" "+aUser.getName()+" "+ aUser.getPassword());
+		
+//		uc.delete(Integer.toString(21474836), conn);
 		
 	}
 

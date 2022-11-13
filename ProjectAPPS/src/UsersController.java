@@ -41,29 +41,42 @@ public class UsersController implements Controller {
 	}
 
 	@Override
-	public boolean delete(Object obj, Connection conn) {
+	public boolean delete(String key, Connection conn) {
 		// TODO Auto-generated method stub
-		User usr = (User) obj;
-		return false;
+		int ikey = Integer.parseInt(key);
+		try {
+			String query = "DELETE FROM User where id="+ikey+";";
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
+			
+			
+		}catch(Exception e) {
+			System.out.println("could not delete data");
+			return false;			
+		}
+		return true;
 	}
 
 	@Override
-	public boolean read(Object obj, Connection conn) {
+	public Object read(String key, Connection conn) {
 		// TODO Auto-generated method stub
-		User usr = (User) obj;
+		int ikey = Integer.parseInt(key);
+		User usr = null;
 		try {
-			String query = "SELECT id, name, password FROM User where id="+usr.getId()+";";
+			String query = "SELECT id, name, password FROM User where id="+ikey+";";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				System.out.println(rs.getString("id")+" "+rs.getString("name")+" "+rs.getString("password"));
+				usr = new User(rs.getInt("id"),rs.getString("name"), rs.getString("password"));
+				
 			}
 			
 		}catch(Exception e) {
 			System.out.println("could not read data");
-			return false;			
+			return usr;			
 		}
-		return true;
+		return usr;
+		
 	}
 
 }
