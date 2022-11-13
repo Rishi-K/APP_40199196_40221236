@@ -43,7 +43,30 @@ public class OpenLibraryDriver {
 		Authors author = areader.readAuthorAPI();
 		System.out.println("------------------------------------------");
 		
-
+//		System.out.println(book.getKey()+" "+ book.getTitle()+" "+ book.getAuthor());
+//		System.out.println(book.getPublishDate()+" "+ book.getPageCount()+" "+ book.getPublisher());
+//		System.out.println(book.getLanguage());
+//		
+//		System.out.println(author.getKey()+" "+ author.getName()+" "+ author.getBio()+" "+ author.getBirthDate()+ " "+ author.getSaleCount()+" "+ author.getLinks());
+		
+//		BooksController bkc = new BooksController();
+//		bkc.insert(book, conn);
+		AuthorsController ac = new AuthorsController();
+		ac.insert(author, conn);
+//		author.setName("Jada Rollins");
+//		ac.update(author, null, null, conn);
+		
+		Authors aut = (Authors)ac.read("OL23919A", conn);
+		System.out.println(aut.getName()+" "+ aut.getBirthDate()+" "+ aut.getKey()+" "+ aut.getLinks());
+		
+//		ac.delete("OL23919A", conn);
+//		Books bk = (Books) bkc.read("OL27351482M", conn);
+//		System.out.println(bk.getTitle()+" "+ bk.getKey()+" "+ bk.getAuthor()+" "+ bk.getPublisher());
+//		
+//		bk.setISBN("ISBN00001");
+//		bkc.update(bk, null, null, conn);
+		
+//		bkc.delete("OL27351482M", conn);
 		
 		
 		
