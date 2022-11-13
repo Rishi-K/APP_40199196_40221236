@@ -37,7 +37,21 @@ public class UsersController implements Controller {
 	public boolean update(Object obj, String column ,String value, Connection conn) {
 		// TODO Auto-generated method stub
 		User usr = (User) obj;
-		return false;
+		try {
+			String query = "UPDATE User SET name='"+usr.getName()+"' , password = '"+ usr.getPassword()+"' where id="+usr.getId()+" ;";
+			System.out.println(query);
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
+			
+			
+		}catch(Exception e) {
+			System.out.println("could not insert data");
+			
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
+		
 	}
 
 	@Override
