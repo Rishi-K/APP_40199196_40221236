@@ -78,12 +78,12 @@ public class APIReader {
 					try {
 				    	JSONParser parser = new JSONParser();
 					    data_obj = (JSONObject) parser.parse(inline);
-					    System.out.println("could reach here");
+//					    System.out.println("could reach here");
 					    Name_obj = (String) data_obj.get("name");
-					    System.out.println("name: "+ Name_obj);
+//					    System.out.println("name: "+ Name_obj);
 					    
 					    key_obj = (String) data_obj.get("key");
-					    System.out.println("key: "+ key_obj.split("/")[2]);
+//					    System.out.println("key: "+ key_obj.split("/")[2]);
 				    	
 				    }catch(Exception e) {
 				    	cflag = false;
@@ -91,7 +91,7 @@ public class APIReader {
 				    }
 				}
 				else {
-					System.out.println("ending the creation of Author object. THere was an error reading the api.");
+//					System.out.println("ending the creation of Author object. THere was an error reading the api.");
 					
 				}
 			
@@ -107,7 +107,7 @@ public class APIReader {
 			    	bio = (String) data_obj.get("bio");
 			    	bio = bio.replace("\"","");
 			    	bio = bio.replace("\'","");
-				    System.out.println("bio: "+ bio);
+//				    System.out.println("bio: "+ bio);
 			    	
 			    }catch(Exception e) {
 			    	
@@ -117,7 +117,7 @@ public class APIReader {
 			    try {
 			    	JSONObject type_obj = (JSONObject) data_obj.get("type");
 				    type = (String) type_obj.get("key");
-				    System.out.println("type: "+ type);
+//				    System.out.println("type: "+ type);
 			    	
 			    }catch(Exception e) {
 			    	
@@ -129,7 +129,7 @@ public class APIReader {
 			    try {
 			    	JSONObject lastModified_obj = (JSONObject) data_obj.get("last_modified");
 				    lastModified = (String) lastModified_obj.get("value");
-				    System.out.println("last_modified: "+ lastModified);
+//				    System.out.println("last_modified: "+ lastModified);
 			    	
 			    }catch(Exception e) {
 			    	
@@ -138,7 +138,7 @@ public class APIReader {
 			    
 			    try {
 			    	remoteIds_obj = (JSONObject) data_obj.get("remote_ids");
-				    System.out.println("remote ids: ");
+//				    System.out.println("remote ids: ");
 			    	
 			    }catch(Exception e) {
 			    	
@@ -148,37 +148,37 @@ public class APIReader {
 			    
 			    try {
 			    	wikidata = (String) remoteIds_obj.get("wikidata");
-			    	System.out.println("wikidata: "+ wikidata);
+//			    	System.out.println("wikidata: "+ wikidata);
 			    }catch(Exception e) {
 			    	
-			    	System.out.println(e.getMessage());
+//			    	System.out.println(e.getMessage());
 			    	wikidata = "";			    	
 			    }
 			    
 			    try {
 			    	isni = (String) remoteIds_obj.get("isni");
-			    	System.out.println("isni: "+ isni);
+//			    	System.out.println("isni: "+ isni);
 			    }catch(Exception e) {
 			    	isni = "";			    	
 			    }
 			    
 			    try {
 			    	goodreads = (String) remoteIds_obj.get("goodreads");
-			    	System.out.println("goodreads: "+ goodreads);
+//			    	System.out.println("goodreads: "+ goodreads);
 			    }catch(Exception e) {
 			    	goodreads = "";			    	
 			    }
 			    
 			    try {
 			    	viaf = (String) remoteIds_obj.get("viaf");
-			    	System.out.println("viaf: "+ viaf);
+//			    	System.out.println("viaf: "+ viaf);
 			    }catch(Exception e) {
 			    	viaf = "";			    	
 			    }
 			    
 			    try {
 			    	librarything = (String) remoteIds_obj.get("librarything");
-			    	System.out.println("librarything: "+ librarything);
+//			    	System.out.println("librarything: "+ librarything);
 			    }catch(Exception e) {
 			    	librarything = "";			    	
 			    }
@@ -187,7 +187,7 @@ public class APIReader {
 			    	
 			    }catch(Exception e) {
 			    	personalName_obj = (String) data_obj.get("personal_name");
-				    System.out.println("personal_name: "+ personalName_obj);
+//				    System.out.println("personal_name: "+ personalName_obj);
 			    	
 			    }
 			    
@@ -195,7 +195,7 @@ public class APIReader {
 			    
 			    try {
 			    	title_obj = (String) data_obj.get("title");
-				    System.out.println("title: "+ title_obj);
+//				    System.out.println("title: "+ title_obj);
 			    	
 			    }catch(Exception e) {
 			    	
@@ -204,7 +204,7 @@ public class APIReader {
 			    
 			    try {
 			    	dob_obj = (String) data_obj.get("birth_date");
-				    System.out.println("title: "+ dob_obj);
+//				    System.out.println("title: "+ dob_obj);
 			    }catch(Exception e) {
 			    	
 			    }
@@ -212,12 +212,12 @@ public class APIReader {
 			    
 			    try {
 			    	links = (JSONArray) data_obj.get("links");
-				    System.out.println("External links are:");
+//				    System.out.println("External links are:");
 				    for(int i=0; i< links.size(); i++) {
 				    	JSONObject current_link = (JSONObject) links.get(i);
-				    	System.out.println("title: "+current_link.get("title"));
-				    	System.out.println("url: "+current_link.get("url"));
-				    	System.out.println();
+//				    	System.out.println("title: "+current_link.get("title"));
+//				    	System.out.println("url: "+current_link.get("url"));
+//				    	System.out.println();
 				    	links_combined+=current_link.get("title")+": "+ current_link.get("url")+"; ";
 				    }
 				    links_combined = links_combined.trim();
@@ -229,9 +229,9 @@ public class APIReader {
 			    
 			    try {
 			    	alternateNames = (JSONArray)data_obj.get("alternate_names");
-				    System.out.println("Alternate Names are: ");
+//				    System.out.println("Alternate Names are: ");
 				    for(int i=0; i< alternateNames.size(); i++) {
-				    	System.out.println(alternateNames.get(i));
+//				    	System.out.println(alternateNames.get(i));
 				    	aNames_combined+= alternateNames.get(i)+"; ";
 				    }
 				    aNames_combined = aNames_combined.trim();
@@ -244,7 +244,7 @@ public class APIReader {
 			    
 			}
 		}catch(Exception e) {
-			System.out.println("Error in reading non essential data. Proceeding wihtout them");
+//			System.out.println("Error in reading non essential data. Proceeding wihtout them");
 			
 		}
 		
@@ -281,7 +281,7 @@ public class APIReader {
 
 			//Getting the response code
 			int responsecode = conn.getResponseCode();
-			System.out.println(responsecode);
+//			System.out.println(responsecode);
 			
 			if (responsecode != 200) {
 			    
@@ -306,7 +306,7 @@ public class APIReader {
 				//Close the scanner
 				scanner.close();
 				    
-				System.out.println(inline);
+//				System.out.println(inline);
 
 				    //Using the JSON simple library parse the string into a json object
 				    
@@ -329,7 +329,7 @@ public class APIReader {
 				    }
 				}
 				else {
-					System.out.println("ending the creation of Author object. There was an error reading the api.");
+//					System.out.println("ending the creation of Author object. There was an error reading the api.");
 					
 				}
 			
@@ -342,7 +342,7 @@ public class APIReader {
 			    
 			    try {
 			    	workCount = (long) data_obj.get("work_count");
-				    System.out.println("workCount: "+ workCount);
+//				    System.out.println("workCount: "+ workCount);
 			    	
 			    }catch(Exception e) {
 			    	workCount = 0;
@@ -350,7 +350,7 @@ public class APIReader {
 			    
 			}
 		}catch(Exception e) {
-			System.out.println("Error in reading non essential data. Proceeding wihtout them");
+//			System.out.println("Error in reading non essential data. Proceeding wihtout them");
 			
 		}
 		
@@ -402,7 +402,7 @@ public class APIReader {
 
 			//Getting the response code
 			int responsecode = conn.getResponseCode();
-			System.out.println(responsecode);
+//			System.out.println(responsecode);
 			
 			if (responsecode != 200) {
 			    
@@ -434,26 +434,26 @@ public class APIReader {
 					try {
 				    	JSONParser parser = new JSONParser();
 					    data_obj = (JSONObject) parser.parse(inline);
-					    System.out.println("could reach here");
+//					    System.out.println("could reach here");
 					    
 					    name_obj = (String) data_obj.get("title");
-					    System.out.println("name: "+ name_obj);
+//					    System.out.println("name: "+ name_obj);
 					    
 					    key_obj = (String) data_obj.get("key");
-					    System.out.println(key_obj);
+//					    System.out.println(key_obj);
 					    key_obj = key_obj.replace("/books/","");
-					    System.out.println("key: "+ key_obj);
+//					    System.out.println("key: "+ key_obj);
 				    	
 				    }catch(Exception e) {
-				    	System.out.println("error reading essential book data");
-				    	System.out.println(e.getMessage());
+//				    	System.out.println("error reading essential book data");
+//				    	System.out.println(e.getMessage());
 				    	
 				    	cflag = false;
 				    	
 				    }
 				}
 				else {
-					System.out.println("ending the creation of Author object. There was an error reading the api.");
+//					System.out.println("ending the creation of Author object. There was an error reading the api.");
 					
 				}
 			
@@ -466,7 +466,7 @@ public class APIReader {
 			    
 			    try {
 			    	publish_date = (String) data_obj.get("publish_date");
-				    System.out.println("publish date: "+ publish_date);
+//				    System.out.println("publish date: "+ publish_date);
 			    	
 			    }catch(Exception e) {
 			    	publish_date = "";
@@ -474,17 +474,17 @@ public class APIReader {
 			    
 			    try {
 			    	pageCount = (long) data_obj.get("number_of_pages");
-				    System.out.println("pageCount: "+ pageCount);
+//				    System.out.println("pageCount: "+ pageCount);
 			    	
 			    }catch(Exception e) {
-			    	System.out.println(e.getMessage());
+//			    	System.out.println(e.getMessage());
 			    	pageCount = 0;
 			    }
 			    
 			    try {
 			    	isbn_list = (JSONArray)data_obj.get("isbn_13");				    
 				    isbn = (String) isbn_list.get(0);
-				    System.out.println("isbn: "+ isbn);
+//				    System.out.println("isbn: "+ isbn);
 			    	
 			    }catch(Exception e) {
 			    	publish_date = "";
@@ -493,7 +493,7 @@ public class APIReader {
 			    try {
 			    	publisher_list = (JSONArray)data_obj.get("publishers");				    
 				    publisher = (String) publisher_list.get(0);
-				    System.out.println("publisher: "+ publisher);
+//				    System.out.println("publisher: "+ publisher);
 			    	
 			    }catch(Exception e) {
 			    	publish_date = "";
@@ -505,7 +505,7 @@ public class APIReader {
 				    JSONObject authorOb = (JSONObject) author_list.get(0);
 				    author = authorOb.get("key").toString();
 				    author = author.replaceAll("/authors/", "");
-				    System.out.println("author: "+ author );
+//				    System.out.println("author: "+ author );
 				    
 				    
 			    	
@@ -518,7 +518,7 @@ public class APIReader {
 				    JSONObject languageOb = (JSONObject) language_list.get(0);
 				    language = languageOb.get("key").toString();
 				    language = language.replaceAll("/languages/", "");
-				    System.out.println("language: "+ language);
+//				    System.out.println("language: "+ language);
 				    
 				    
 			    	
@@ -529,7 +529,7 @@ public class APIReader {
 			    
 			}
 		}catch(Exception e) {
-			System.out.println("Error in reading non essential data. Proceeding wihtout them");
+//			System.out.println("Error in reading non essential data. Proceeding wihtout them");
 			
 		}
 		
@@ -566,7 +566,7 @@ public class APIReader {
 
 			//Getting the response code
 			int responsecode = conn.getResponseCode();
-			System.out.println(responsecode);
+//			System.out.println(responsecode);
 			
 			if (responsecode != 200) {
 			    
@@ -598,7 +598,7 @@ public class APIReader {
 				    try {
 				    	JSONParser parser = new JSONParser();
 					    data_obj = (JSONObject) parser.parse(inline);
-					    System.out.println("could reach here");
+//					    System.out.println("could reach here");
 					    
 					    docs = (JSONArray) data_obj.get("docs");
 					    	    
@@ -609,7 +609,7 @@ public class APIReader {
 				    }
 				}
 				else {
-					System.out.println("ending the creation of Author object. There was an error reading the api.");
+//					System.out.println("ending the creation of Author object. There was an error reading the api.");
 					
 				}
 			
@@ -619,7 +619,7 @@ public class APIReader {
 		
 		try {	
 			if(cflag==true) {
-			    System.out.println("total number of docs: "+ docs.size());
+//			    System.out.println("total number of docs: "+ docs.size());
 				for(int i=0; i< docs.size(); i++) {
 					try {
 						JSONObject doc = (JSONObject) docs.get(i);
@@ -636,7 +636,7 @@ public class APIReader {
 				}
 			}
 		}catch(Exception e) {
-			System.out.println("Error in reading non essential data. Proceeding wihtout them");
+//			System.out.println("Error in reading non essential data. Proceeding wihtout them");
 			
 		}
 		

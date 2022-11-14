@@ -40,10 +40,36 @@ public class OpenLibraryDriver {
 	
 	
 	
-	public static void buildDB() {
-		Connection conn = OpenLibraryDriver.getConnection();
-		APIReader areader = new APIReader();
+	public static ArrayList<String> readAuthorList() {
 		
+		ArrayList<String> authorList = new ArrayList<String>();
+		try {
+		      File myObj = new File("C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\AuthorKeys.txt");
+		      Scanner myReader = new Scanner(myObj);
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        authorList.add(data.trim());
+		      }
+		      myReader.close();
+		} catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		}
+		return authorList;
+		
+	}
+	
+	public static void displayChart(ChartTracker ct) {
+		if(ct.getErrorFlag()==false) {
+			System.out.println("Most popular books are:- ");
+			System.out.println("1. "+ct.getBookOne().getTitle()+"\n2. "+ct.getBookTwo().getTitle()+"\n3. "+ct.getBookThree().getTitle());
+			System.out.println();
+			System.out.println("Most popular authors are:- ");
+			System.out.println("1. "+ct.getAuthorOne().getName()+"\n2. "+ct.getAuthorTwo().getName()+"\n3. "+ct.getAuthorThree().getName());
+		}
+		else {
+			System.out.println("ChartTracker state in error.");
+		}
 	}
 
 	public static void main(String[] args) {
@@ -53,20 +79,14 @@ public class OpenLibraryDriver {
 		
 		
 		
-//		ArrayList<String> authorList = new ArrayList<String>();
-//		try {
-//		      File myObj = new File("C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\AuthorKeys.txt");
-//		      Scanner myReader = new Scanner(myObj);
-//		      while (myReader.hasNextLine()) {
-//		        String data = myReader.nextLine();
-//		        authorList.add(data.trim());
-//		      }
-//		      myReader.close();
-//		} catch (FileNotFoundException e) {
-//		      System.out.println("An error occurred.");
-//		      e.printStackTrace();
+//		ArrayList<String> authorList = OpenLibraryDriver.readAuthorList();
+//		if (authorList.size()==0) {
+//			System.out.println("No author read");
 //		}
-//		System.out.println(authorList.toString());
+//		else {
+//			System.out.println(authorList.toString());
+//		}
+//		
 		
 		Connection conn = OpenLibraryDriver.getConnection();
 		
@@ -82,8 +102,8 @@ public class OpenLibraryDriver {
 //		
 //		System.out.println("---------------------------");
 //		
-//		BooksController bkc = new BooksController();
-//		AuthorsController ac = new AuthorsController();
+		BooksController bkc = new BooksController();
+		AuthorsController ac = new AuthorsController();
 //		ArrayList<String> authorNames = ac.getAuthorNames(conn);
 //		System.out.println(authorNames.toString());
 //		
@@ -105,31 +125,22 @@ public class OpenLibraryDriver {
 //			book.setAuthor(booklist.get(i).split(";")[1]);
 //			bkc.insert(book, conn);
 //		}
-		
+//		
 		
 		
 		Scanner scnr = new Scanner(System.in);
 		boolean rflag = true;
 		
 		System.out.println("Welcome to the Open Library Management System.");
-		ChartTracker ct = new ChartTracker();
-		List<Authors> taut = ct.getTopAuthors(conn);
-		List<Books> tbk = ct.getTopBooks(conn);
-		
-		if(tbk!=null) {
-			System.out.println("Most popular books are:- ");
-			System.out.println("1. "+tbk.get(0).getTitle()+"\n2. "+tbk.get(1).getTitle()+"\n3. "+tbk.get(2).getTitle());
-			System.out.println();
-			System.out.println("Most popular authors are:- ");
-			System.out.println("1. "+taut.get(0).getName()+"\n2. "+taut.get(1).getName()+"\n3. "+taut.get(2).getName());
-		}
+		ChartTracker ct = new ChartTracker(conn);
+		OpenLibraryDriver.displayChart(ct);
 		
 		boolean logflag = false;
 		boolean bflag = false;
 		User usr = null;
 		UsersController uc = new UsersController();
-		BooksController bkc = new BooksController();
-		AuthorsController ac = new AuthorsController();
+		BooksController bkc1 = new BooksController();
+		AuthorsController ac1 = new AuthorsController();
 		BuyMapperController bmpc = new BuyMapperController();
 		
 		while(rflag==true) {
@@ -164,9 +175,7 @@ public class OpenLibraryDriver {
 						
 					}
 					else {
-						System.out.println(usr.getPassword());
-						System.out.println(pwd);
-						System.out.println("Welcome but something wrong "+ usr.getName());
+						
 						System.out.println("Either your entered id or password was wrong");
 						
 					}
@@ -202,16 +211,9 @@ public class OpenLibraryDriver {
 						
 						usr.buyBook(book, quantity, bmpc, bkc, ac, conn);
 						
-						taut = ct.getTopAuthors(conn);
-						tbk = ct.getTopBooks(conn);
+						boolean uf = ct.update(conn);
 						
-						if(tbk!=null) {
-							System.out.println("Most popular books are:- ");
-							System.out.println("1. "+tbk.get(0).getTitle()+"\n2. "+tbk.get(1).getTitle()+"\n3. "+tbk.get(2).getTitle());
-							System.out.println();
-							System.out.println("Most popular authors are:- ");
-							System.out.println("1. "+taut.get(0).getName()+"\n2. "+taut.get(1).getName()+"\n3. "+taut.get(2).getName());
-						}
+						OpenLibraryDriver.displayChart(ct);
 						
 					}
 					
@@ -237,18 +239,11 @@ public class OpenLibraryDriver {
 								int quantity = Integer.parseInt(scnr.nextLine());
 								
 								
-								usr.buyBook(book, quantity, bmpc, bkc, ac, conn);
+								usr.buyBook(book, quantity, bmpc, bkc1, ac1, conn);
 								
-								taut = ct.getTopAuthors(conn);
-								tbk = ct.getTopBooks(conn);
+								boolean uf = ct.update(conn);
 								
-								if(tbk!=null) {
-									System.out.println("Most popular books are:- ");
-									System.out.println("1. "+tbk.get(0).getTitle()+"\n2. "+tbk.get(1).getTitle()+"\n3. "+tbk.get(2).getTitle());
-									System.out.println();
-									System.out.println("Most popular authors are:- ");
-									System.out.println("1. "+taut.get(0).getName()+"\n2. "+taut.get(1).getName()+"\n3. "+taut.get(2).getName());
-								}
+								OpenLibraryDriver.displayChart(ct);
 								
 							}
 						}
