@@ -3,6 +3,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -93,7 +94,21 @@ public class AuthorsController implements Controller{
 		
 	}
 	
-	public String[] getAuthorLists(Connection conn) {
-		return new String[20];
+	public ArrayList<String> getAuthorNames(Connection conn) {
+		ArrayList<String> authorList = new ArrayList<String>();
+		try {
+			String query = "SELECT name, key FROM Authors;";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				authorList.add(rs.getString("name")+";"+rs.getString("key"));
+			}
+			
+		}catch(Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("could not read data in getAuthorNames");
+			return null;			
+		}
+		return authorList;
 	}
 }

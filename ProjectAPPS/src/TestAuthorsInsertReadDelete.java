@@ -10,7 +10,7 @@ class TestAuthorsInsertReadDelete {
 	void test() {
 		Connection conn = OpenLibraryDriver.getConnection();		
 		APIReader areader = new APIReader();
-		Authors author = areader.readAuthorAPI();
+		Authors author = areader.readAuthorAPI("OL23919A");
 		AuthorsController ac = new AuthorsController();
 		ac.insert(author, conn);
 		Authors aut = (Authors) ac.read(author.getKey(), conn);

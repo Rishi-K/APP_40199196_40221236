@@ -3,6 +3,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -96,5 +97,45 @@ public class BooksController implements Controller {
 		return book;
 		
 	}
+	
+	public Object readBookByName(String name, Connection conn) {
+		// TODO Auto-generated method stub
+		Books book = null;
+		try {
+			String query = "SELECT key, title, author, publisher, ISBN, pageCount, language, publishDate, copiesBought FROM Books where name='"+name+"';";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				book = new Books(rs.getString("key"),rs.getString("title"), rs.getString("author"), rs.getString("publisher"), rs.getString("ISBN"), rs.getInt("pageCount"), rs.getString("language"), rs.getString("publishDate") );
+				book.setCopiesBought(rs.getLong("copiesBought"));
+			}
+			
+		}catch(Exception e) {
+			System.out.println("could not read data");
+			return null;			
+		}
+		return book;
+		
+	}
+	
+	public ArrayList<String> getAllBooks(Connection conn) {
+		// TODO Auto-generated method stub
+		ArrayList<String> booklist = new ArrayList<String>(); 
+		try {
+			String query = "SELECT title FROM Books;";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				booklist.add(rs.getString(rs.getString("title")));
+			}
+			
+		}catch(Exception e) {
+			System.out.println("could not read data");
+			return null;			
+		}
+		return booklist;
+		
+	}
+	
 
 }

@@ -1,5 +1,6 @@
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
@@ -8,7 +9,7 @@ import org.json.simple.parser.JSONParser;
 
 public class APIReader {
 	
-	public Authors readAuthorAPI() {
+	public Authors readAuthorAPI(String key) {
 		boolean cflag = true;
 		JSONObject data_obj=null;
 		String bio="";
@@ -36,7 +37,7 @@ public class APIReader {
 		try {
 			String base_url = "https://openlibrary.org/";
 			String api = "authors/";
-			String api_key = "OL23919A" +".json";
+			String api_key = key +".json";
 			url = new URL(base_url+api+api_key);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -364,7 +365,7 @@ public class APIReader {
 	}
 	
 	
-	public Books readBookAPI() {
+	public Books readBookAPI(String key) {
 		boolean cflag = true;
 		JSONObject data_obj=null;
 		
@@ -392,7 +393,7 @@ public class APIReader {
 		try {
 			String base_url = "https://openlibrary.org/";
 			String api = "books/";
-			String api_key = "OL27351482M" +".json";
+			String api_key = key +".json";
 			url = new URL(base_url+api+api_key);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -439,9 +440,14 @@ public class APIReader {
 					    System.out.println("name: "+ name_obj);
 					    
 					    key_obj = (String) data_obj.get("key");
-					    System.out.println("key: "+ key_obj.split("/")[2]);
+					    System.out.println(key_obj);
+					    key_obj = key_obj.replace("/books/","");
+					    System.out.println("key: "+ key_obj);
 				    	
 				    }catch(Exception e) {
+				    	System.out.println("error reading essential book data");
+				    	System.out.println(e.getMessage());
+				    	
 				    	cflag = false;
 				    	
 				    }
@@ -498,7 +504,8 @@ public class APIReader {
 			    	author_list = (JSONArray) data_obj.get("authors");
 				    JSONObject authorOb = (JSONObject) author_list.get(0);
 				    author = authorOb.get("key").toString();
-				    System.out.println("author: "+ author.split("/")[2]);
+				    author = author.replaceAll("/authors/", "");
+				    System.out.println("author: "+ author );
 				    
 				    
 			    	
@@ -510,7 +517,8 @@ public class APIReader {
 			    	language_list = (JSONArray) data_obj.get("languages");
 				    JSONObject languageOb = (JSONObject) language_list.get(0);
 				    language = languageOb.get("key").toString();
-				    System.out.println("language: "+ language.split("/")[2]);
+				    language = language.replaceAll("/languages/", "");
+				    System.out.println("language: "+ language);
 				    
 				    
 			    	
@@ -529,7 +537,7 @@ public class APIReader {
 			return null;
 		}
 		else {
-			Books book = new Books(key_obj.split("/")[2], name_obj, author.split("/")[2], publisher ,isbn,(int)pageCount, language.split("/")[2], publish_date);
+			Books book = new Books(key_obj, name_obj, author, publisher ,isbn,(int)pageCount, language, publish_date);
 			return book;
 		}
 		
@@ -537,8 +545,107 @@ public class APIReader {
 	}
 	
 	
-	
-	
-	
+	public ArrayList<String> getAuthorBookKeys(String key, String author) {
+		ArrayList<String> booklist = new ArrayList<String>();
+		boolean cflag = true;
+		JSONObject data_obj=null;
+		URL url =null;
+		
+		JSONArray docs = null;
+			
+		try {
+			String base_url = "https://openlibrary.org/";
+			String api = "search.json/?author=";
+			key = key.replaceAll(" ","%20");
+			String api_key = key;
+			url = new URL(base_url+api+api_key);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.connect();
+
+			//Getting the response code
+			int responsecode = conn.getResponseCode();
+			System.out.println(responsecode);
+			
+			if (responsecode != 200) {
+			    
+			    cflag = false;
+			} 
+			
+		}catch(Exception e) {
+			cflag = false;
+		}
+		
+		try {
+			if (cflag == true){
+				  
+				String inline = "";
+				Scanner scanner = new Scanner(url.openStream());
+				  
+				//Write all the JSON data into a string using a scanner
+				while (scanner.hasNext()) {
+					inline += scanner.nextLine();
+				}
+				    
+				//Close the scanner
+				scanner.close();
+				    
+				//System.out.println(inline);
+
+				    //Using the JSON simple library parse the string into a json object
+				    
+				    try {
+				    	JSONParser parser = new JSONParser();
+					    data_obj = (JSONObject) parser.parse(inline);
+					    System.out.println("could reach here");
+					    
+					    docs = (JSONArray) data_obj.get("docs");
+					    	    
+				    	
+				    }catch(Exception e) {
+				    	cflag = false;
+				    	
+				    }
+				}
+				else {
+					System.out.println("ending the creation of Author object. There was an error reading the api.");
+					
+				}
+			
+		}catch(Exception e) {
+			cflag=false;
+		}
+		
+		try {	
+			if(cflag==true) {
+			    System.out.println("total number of docs: "+ docs.size());
+				for(int i=0; i< docs.size(); i++) {
+					try {
+						JSONObject doc = (JSONObject) docs.get(i);
+				    	JSONArray editions = (JSONArray) doc.get("edition_key");
+				    	booklist.add((String)editions.get(0)+";"+author);
+//				    	System.out.println(i+" :"+(String)editions.get(0));
+				    }catch(Exception e) {
+				    	System.out.println("error reading JSONObject");
+				    	System.out.println(e.getMessage());
+				    	continue;
+			    	}		
+			    	
+			       
+				}
+			}
+		}catch(Exception e) {
+			System.out.println("Error in reading non essential data. Proceeding wihtout them");
+			
+		}
+		
+		if (cflag== false) {
+			return null;
+		}
+		else {
+			return booklist;
+		}		
+	}	
 
 }

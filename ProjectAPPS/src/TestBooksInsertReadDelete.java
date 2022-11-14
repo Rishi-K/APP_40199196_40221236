@@ -10,7 +10,7 @@ class TestBooksInsertReadDelete {
 	void test() {
 		Connection conn = OpenLibraryDriver.getConnection();		
 		APIReader areader = new APIReader();
-		Books book = areader.readBookAPI();
+		Books book = areader.readBookAPI("OL27351482M");
 		BooksController bkc = new BooksController();
 		bkc.insert(book, conn);
 		Books bk = (Books) bkc.read(book.getKey(), conn);

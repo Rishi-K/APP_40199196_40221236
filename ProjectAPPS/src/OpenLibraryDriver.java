@@ -4,12 +4,18 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.sqlite.SQLiteDataSource;
+
+import java.io.File; 
+import java.io.FileNotFoundException;  
+import java.util.Scanner;
 
 
 
@@ -31,44 +37,75 @@ public class OpenLibraryDriver {
 			return null;
 		}
 	}
+	
+	
+	
+	public static void buildDB() {
+		Connection conn = OpenLibraryDriver.getConnection();
+		APIReader areader = new APIReader();
+		
+	}
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		
 		// script to read data for authors api
+		
+		
+		
+		ArrayList<String> authorList = new ArrayList<String>();
+		try {
+		      File myObj = new File("C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\AuthorKeys.txt");
+		      Scanner myReader = new Scanner(myObj);
+		      while (myReader.hasNextLine()) {
+		        String data = myReader.nextLine();
+		        authorList.add(data.trim());
+		      }
+		      myReader.close();
+		} catch (FileNotFoundException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		}
+		System.out.println(authorList.toString());
+		
 		Connection conn = OpenLibraryDriver.getConnection();
 		
 		APIReader areader = new APIReader();
-		Books book = areader.readBookAPI();
-		Authors author = areader.readAuthorAPI();
-		System.out.println("------------------------------------------");
-		
-//		System.out.println(book.getKey()+" "+ book.getTitle()+" "+ book.getAuthor());
-//		System.out.println(book.getPublishDate()+" "+ book.getPageCount()+" "+ book.getPublisher());
-//		System.out.println(book.getLanguage());
+//
 //		
-//		System.out.println(author.getKey()+" "+ author.getName()+" "+ author.getBio()+" "+ author.getBirthDate()+ " "+ author.getSaleCount()+" "+ author.getLinks());
+		if(authorList != null) {
+			AuthorsController ac = new AuthorsController();
+			for(int i=0;i<authorList.size();i++) {
+				Authors author = areader.readAuthorAPI(authorList.get(i).trim());
+				ac.insert(author, conn);
+			}
+		}
 		
-//		BooksController bkc = new BooksController();
-//		bkc.insert(book, conn);
+		System.out.println("---------------------------");
+		
+		BooksController bkc = new BooksController();
 		AuthorsController ac = new AuthorsController();
-		ac.insert(author, conn);
-//		author.setName("Jada Rollins");
-//		ac.update(author, null, null, conn);
+		ArrayList<String> authorNames = ac.getAuthorNames(conn);
+		System.out.println(authorNames.toString());
 		
-		Authors aut = (Authors)ac.read("OL23919A", conn);
-		System.out.println(aut.getName()+" "+ aut.getBirthDate()+" "+ aut.getKey()+" "+ aut.getLinks());
+		System.out.println("---------------------------------");
 		
-//		ac.delete("OL23919A", conn);
-//		Books bk = (Books) bkc.read("OL27351482M", conn);
-//		System.out.println(bk.getTitle()+" "+ bk.getKey()+" "+ bk.getAuthor()+" "+ bk.getPublisher());
-//		
-//		bk.setISBN("ISBN00001");
-//		bkc.update(bk, null, null, conn);
+		ArrayList<String> booklist = new ArrayList<String>();
+		for(int i=0; i< authorNames.size(); i++) {
+			ArrayList<String> currentAuthorBooks = areader.getAuthorBookKeys(authorNames.get(i).split(";")[0], authorNames.get(i).split(";")[1]);
+			List<String> arrlist2 = currentAuthorBooks.subList(0, 3);
+			booklist.addAll(arrlist2);
+			
+		}
+		System.out.println(booklist.toString());
+		System.out.println("---------------------------------------");
 		
-//		bkc.delete("OL27351482M", conn);
-		
-		
+		for(int i=0; i< booklist.size(); i++) {
+			System.out.println(booklist.get(i).split(";")[0].trim());
+			Books book = areader.readBookAPI(booklist.get(i).split(";")[0].trim());
+			book.setAuthor(booklist.get(i).split(";")[1]);
+			bkc.insert(book, conn);
+		}
 		
 	}
 
