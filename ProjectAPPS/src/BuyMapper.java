@@ -1,12 +1,18 @@
 public class BuyMapper {
-    String user;
+    int user;
     String book;
+    
+    
+    public BuyMapper(int id, String bookKey) {
+    	this.user = id;
+    	this.book = bookKey;
+    }
     
     //accessor methods
     public String getBook() {
     	return this.book;
     }    
-    public String getUser() {
+    public int getUser() {
     	return this.user;
     }
     
@@ -14,7 +20,7 @@ public class BuyMapper {
     public void setBook(String book) {
     	this.book = book;
     }
-    public void setUser(String user) {
+    public void setUser(int user) {
     	this.user= user;
     }
     

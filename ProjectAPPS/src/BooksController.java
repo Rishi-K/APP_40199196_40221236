@@ -102,15 +102,16 @@ public class BooksController implements Controller {
 		// TODO Auto-generated method stub
 		Books book = null;
 		try {
-			String query = "SELECT key, title, author, publisher, ISBN, pageCount, language, publishDate, copiesBought FROM Books where name='"+name+"';";
+			String query = "SELECT key, title, author, publisher, ISBN, pageCount, language, publishDate, copiesBought FROM Books where title='"+name+"';";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				book = new Books(rs.getString("key"),rs.getString("title"), rs.getString("author"), rs.getString("publisher"), rs.getString("ISBN"), rs.getInt("pageCount"), rs.getString("language"), rs.getString("publishDate") );
-				book.setCopiesBought(rs.getLong("copiesBought"));
+				book = new Books(rs.getString("key"),rs.getString("title"), rs.getString("author"), rs.getString("publisher"), rs.getString("ISBN"), rs.getInt("pageCount"), rs.getString("language"), rs.getString("publishDate"), rs.getLong("copiesBought") );
+				
 			}
 			
 		}catch(Exception e) {
+			System.out.println(e.getMessage());
 			System.out.println("could not read data");
 			return null;			
 		}

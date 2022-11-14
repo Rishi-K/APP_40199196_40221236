@@ -125,23 +125,27 @@ public class OpenLibraryDriver {
 		}
 		
 		boolean logflag = false;
+		boolean bflag = false;
 		User usr = null;
 		UsersController uc = new UsersController();
+		BooksController bkc = new BooksController();
 		
 		while(rflag==true) {
 			System.out.println("What do you want to do? Chose option by typing the corresponding number");
 			if (logflag ==false) {
 				System.out.println("1. LogIn\n2. Quit");
-				int choice = Integer.parseInt(scnr.nextLine());
+//				int choice = Integer.parseInt(scnr.nextLine());
+				int choice = 1;
 				if(choice==2) {
 					rflag = false;
 				}
 				else if(choice == 1) {
 					System.out.println("Please enter your id:");
-					String id = scnr.nextLine();
+//					String id = scnr.nextLine();
+					String id = "324535";
 					System.out.println("Please enter your password:");
-					String pwd = scnr.nextLine().trim();
-					
+//					String pwd = scnr.nextLine().trim();
+					String pwd = "RG@12";
 					
 					usr = (User) uc.read(id, conn);
 					
@@ -169,7 +173,8 @@ public class OpenLibraryDriver {
 			
 			else {
 				System.out.println("1. Start a Book Buying Session\n2. LogOut\n3. Quit");
-				int choice = Integer.parseInt(scnr.nextLine());
+//				int choice = Integer.parseInt(scnr.nextLine());
+				int choice =1;
 				if(choice==3) {
 					rflag = false;
 				}
@@ -178,7 +183,40 @@ public class OpenLibraryDriver {
 					logflag = false;
 				}
 				else if(choice == 1) {
+					bflag = true;
 					System.out.println("Code for buying session comes here");
+					System.out.println("Enter the book title to buy:");
+					String title = scnr.nextLine();
+					
+					Books book = (Books)bkc.readBookByName(title, conn);
+					if(book==null) {
+						System.out.println("Book not found");
+					}
+					else {
+						System.out.println(book.getTitle()+" "+ book.getKey()+" "+ book.getAuthor()+" "+ book.getPublisher());
+					}
+					
+					while(bflag==true) {
+						System.out.println("Do you want to continue the buying session:Enter yes or no.");
+						String chc = scnr.nextLine();
+						if (!(chc.toLowerCase().equals("yes"))) {
+							bflag = false;
+						}
+						else {
+							System.out.println("Enter the book title to buy:");
+							title = scnr.nextLine();
+							
+							book = (Books)bkc.readBookByName(title, conn);
+							if(book==null) {
+								System.out.println("Book not found");
+							}
+							else {
+								System.out.println(book.getTitle()+" "+ book.getKey()+" "+ book.getAuthor()+" "+ book.getPublisher());
+							}
+						}
+						
+					}
+					
 				}
 				
 			}

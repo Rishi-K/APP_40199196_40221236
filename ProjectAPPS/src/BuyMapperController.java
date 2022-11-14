@@ -11,35 +11,79 @@ import org.json.simple.parser.JSONParser;
 import org.sqlite.SQLiteDataSource;
 
 
-public class BuyMapperController implements Controller {
+public class BuyMapperController {
 
-	
-	@Override
-	public boolean insert(Object obj, Connection conn) {
+	public boolean insert(String book, int userId, Connection conn) {
 		// TODO Auto-generated method stub
-		BuyMapper bmap = (BuyMapper) obj;
-		return false;
+		try {
+			String query = "INSERT INTO BuyMapper( user, book ) VALUES ("+ userId+", '"+ book+"');";
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
+			
+			
+		}catch(Exception e) {
+			System.out.println("could not insert data");
+			
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
 	}
 	
-	@Override
-	public boolean update(Object obj, String column ,String value, Connection conn) {
-		// TODO Auto-generated method stub
-		BuyMapper bmap = (BuyMapper) obj;
-		return false;
+	
+	public boolean update(String book, int userId, Connection conn) {
+		// TODO Auto-generated method stub		
+		try {
+			String query = "UPDATE BuyMapper SET user="+userId+"' where user="+userId+" and book='"+book+"';";
+			System.out.println(query);
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
+			
+			
+		}catch(Exception e) {
+			System.out.println("could not insert data");
+			
+			System.out.println(e.getMessage());
+			return false;
+		}
+		return true;
 	}
 
-	@Override
-	public boolean delete(String key, Connection conn) {
+	
+	public boolean delete(String book, int userId, Connection conn) {
 		// TODO Auto-generated method stub
-		
-		return false;
+		try {
+			String query = "DELETE FROM BuyMapper where user="+userId+" and book='"+book+"';";
+			Statement stmt = conn.createStatement();
+			int rs = stmt.executeUpdate(query);
+			
+			
+		}catch(Exception e) {
+			System.out.println("could not delete data");
+			return false;			
+		}
+		return true;
 	}
 
-	@Override
-	public Object read(String key, Connection conn) {
+	
+	public Object read(String book, int userId, Connection conn) {
 		// TODO Auto-generated method stub
+		BuyMapper bmp = null;
+		try {
+			String query = "SELECT user, book FROM BuyMapper where user="+userId+" and book='"+book+"';";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while(rs.next()) {
+				bmp = new BuyMapper(rs.getInt("user"),rs.getString("book"));
+				
+			}
+			
+		}catch(Exception e) {
+			System.out.println("could not read data");
+			return null;			
+		}
+		return bmp;
 		
-		return false;
 	}
 
 }
