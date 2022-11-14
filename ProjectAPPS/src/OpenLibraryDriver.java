@@ -208,10 +208,8 @@ public class OpenLibraryDriver {
 						System.out.println("how many copies do you want to buy?");
 						int quantity = Integer.parseInt(scnr.nextLine());
 						
-						
+						usr.setChartTracker(ct);
 						usr.buyBook(book, quantity, bmpc, bkc, ac, conn);
-						
-						boolean uf = ct.update(conn);
 						
 						OpenLibraryDriver.displayChart(ct);
 						
@@ -238,10 +236,8 @@ public class OpenLibraryDriver {
 								System.out.println("how many copies do you want to buy?");
 								int quantity = Integer.parseInt(scnr.nextLine());
 								
-								
+								usr.setChartTracker(ct);
 								usr.buyBook(book, quantity, bmpc, bkc1, ac1, conn);
-								
-								boolean uf = ct.update(conn);
 								
 								OpenLibraryDriver.displayChart(ct);
 								

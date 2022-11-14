@@ -6,12 +6,14 @@ public class User {
     private int id;
     private String name;
     private String password;
+    private ChartTracker ct=null;
     
     
-    public User(int id, String name, String password) {
+    public User(int id, String name, String password ) {
     	this.id = id;
     	this.name = name;
     	this.password = password;
+    	
     }
     
     
@@ -25,6 +27,9 @@ public class User {
     public String getPassword() {
     	return this.password;
     }
+    public ChartTracker getChartTracker() {
+    	return this.ct;
+    }
     
     //mutator methods
     public void setName(String name) {
@@ -35,6 +40,10 @@ public class User {
     }
     public void setPassword(int id) {
     	this.id = id;
+    }
+    
+    public void setChartTracker(ChartTracker ct) {
+    	this.ct = ct;
     }
     
     public boolean buyBook(Books book, int quantity, BuyMapperController bmpc, BooksController bkc, AuthorsController ac, Connection conn ) {
@@ -48,6 +57,8 @@ public class User {
     	aut.setSaleCount(aut.getSaleCount()+quantity);
     	
     	ac.update(aut, null, null, conn);
+    	
+    	ct.update(conn);
     	
     	return true;
     }
