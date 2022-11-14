@@ -53,59 +53,139 @@ public class OpenLibraryDriver {
 		
 		
 		
-		ArrayList<String> authorList = new ArrayList<String>();
-		try {
-		      File myObj = new File("C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\AuthorKeys.txt");
-		      Scanner myReader = new Scanner(myObj);
-		      while (myReader.hasNextLine()) {
-		        String data = myReader.nextLine();
-		        authorList.add(data.trim());
-		      }
-		      myReader.close();
-		} catch (FileNotFoundException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
-		}
-		System.out.println(authorList.toString());
+//		ArrayList<String> authorList = new ArrayList<String>();
+//		try {
+//		      File myObj = new File("C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\AuthorKeys.txt");
+//		      Scanner myReader = new Scanner(myObj);
+//		      while (myReader.hasNextLine()) {
+//		        String data = myReader.nextLine();
+//		        authorList.add(data.trim());
+//		      }
+//		      myReader.close();
+//		} catch (FileNotFoundException e) {
+//		      System.out.println("An error occurred.");
+//		      e.printStackTrace();
+//		}
+//		System.out.println(authorList.toString());
 		
 		Connection conn = OpenLibraryDriver.getConnection();
 		
 		APIReader areader = new APIReader();
-//
+		
+//		if(authorList != null) {
+//			AuthorsController ac = new AuthorsController();
+//			for(int i=0;i<authorList.size();i++) {
+//				Authors author = areader.readAuthorAPI(authorList.get(i).trim());
+//				ac.insert(author, conn);
+//			}
+//		}
 //		
-		if(authorList != null) {
-			AuthorsController ac = new AuthorsController();
-			for(int i=0;i<authorList.size();i++) {
-				Authors author = areader.readAuthorAPI(authorList.get(i).trim());
-				ac.insert(author, conn);
-			}
+//		System.out.println("---------------------------");
+//		
+//		BooksController bkc = new BooksController();
+//		AuthorsController ac = new AuthorsController();
+//		ArrayList<String> authorNames = ac.getAuthorNames(conn);
+//		System.out.println(authorNames.toString());
+//		
+//		System.out.println("---------------------------------");
+//		
+//		ArrayList<String> booklist = new ArrayList<String>();
+//		for(int i=0; i< authorNames.size(); i++) {
+//			ArrayList<String> currentAuthorBooks = areader.getAuthorBookKeys(authorNames.get(i).split(";")[0], authorNames.get(i).split(";")[1]);
+//			List<String> arrlist2 = currentAuthorBooks.subList(0, 3);
+//			booklist.addAll(arrlist2);
+//			
+//		}
+//		System.out.println(booklist.toString());
+//		System.out.println("---------------------------------------");
+//		
+//		for(int i=0; i< booklist.size(); i++) {
+//			System.out.println(booklist.get(i).split(";")[0].trim());
+//			Books book = areader.readBookAPI(booklist.get(i).split(";")[0].trim());
+//			book.setAuthor(booklist.get(i).split(";")[1]);
+//			bkc.insert(book, conn);
+//		}
+		
+		
+		
+		Scanner scnr = new Scanner(System.in);
+		boolean rflag = true;
+		
+		System.out.println("Welcome to the Open Library Management System.");
+		ChartTracker ct = new ChartTracker();
+		List<Authors> taut = ct.getTopAuthors(conn);
+		List<Books> tbk = ct.getTopBooks(conn);
+		
+		if(tbk!=null) {
+			System.out.println("Most popular books are:- ");
+			System.out.println("1. "+tbk.get(0).getTitle()+"\n2. "+tbk.get(1).getTitle()+"\n3. "+tbk.get(2).getTitle());
+			System.out.println();
+			System.out.println("Most popular authors are:- ");
+			System.out.println("1. "+taut.get(0).getName()+"\n2. "+taut.get(1).getName()+"\n3. "+taut.get(2).getName());
 		}
 		
-		System.out.println("---------------------------");
+		boolean logflag = false;
+		User usr = null;
+		UsersController uc = new UsersController();
 		
-		BooksController bkc = new BooksController();
-		AuthorsController ac = new AuthorsController();
-		ArrayList<String> authorNames = ac.getAuthorNames(conn);
-		System.out.println(authorNames.toString());
-		
-		System.out.println("---------------------------------");
-		
-		ArrayList<String> booklist = new ArrayList<String>();
-		for(int i=0; i< authorNames.size(); i++) {
-			ArrayList<String> currentAuthorBooks = areader.getAuthorBookKeys(authorNames.get(i).split(";")[0], authorNames.get(i).split(";")[1]);
-			List<String> arrlist2 = currentAuthorBooks.subList(0, 3);
-			booklist.addAll(arrlist2);
+		while(rflag==true) {
+			System.out.println("What do you want to do? Chose option by typing the corresponding number");
+			if (logflag ==false) {
+				System.out.println("1. LogIn\n2. Quit");
+				int choice = Integer.parseInt(scnr.nextLine());
+				if(choice==2) {
+					rflag = false;
+				}
+				else if(choice == 1) {
+					System.out.println("Please enter your id:");
+					String id = scnr.nextLine();
+					System.out.println("Please enter your password:");
+					String pwd = scnr.nextLine().trim();
+					
+					
+					usr = (User) uc.read(id, conn);
+					
+					if(usr == null ){
+						
+						System.out.println("Your entered id was wrong as no user could be found for id");
+						
+						
+					}
+					else if(usr.getPassword().trim().equals(pwd)){
+						
+						logflag = true;
+						System.out.println("Welcome "+ usr.getName());
+						
+					}
+					else {
+						System.out.println(usr.getPassword());
+						System.out.println(pwd);
+						System.out.println("Welcome but something wrong "+ usr.getName());
+						System.out.println("Either your entered id or password was wrong");
+						
+					}
+				}
+			}
+			
+			else {
+				System.out.println("1. Start a Book Buying Session\n2. LogOut\n3. Quit");
+				int choice = Integer.parseInt(scnr.nextLine());
+				if(choice==3) {
+					rflag = false;
+				}
+				else if(choice == 2) {
+					usr = null;
+					logflag = false;
+				}
+				else if(choice == 1) {
+					System.out.println("Code for buying session comes here");
+				}
+				
+			}
 			
 		}
-		System.out.println(booklist.toString());
-		System.out.println("---------------------------------------");
 		
-		for(int i=0; i< booklist.size(); i++) {
-			System.out.println(booklist.get(i).split(";")[0].trim());
-			Books book = areader.readBookAPI(booklist.get(i).split(";")[0].trim());
-			book.setAuthor(booklist.get(i).split(";")[1]);
-			bkc.insert(book, conn);
-		}
+		
 		
 	}
 

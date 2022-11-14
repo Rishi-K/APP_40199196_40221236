@@ -18,6 +18,16 @@ public class Authors {
 	 
 	}
 	
+	public Authors(String key, String name, String birth_date, String links, long saleCount ){
+		
+		this.birth_date = birth_date;
+		this.links = links;
+		this.key = key;
+		this.name = name;
+		this.saleCount = saleCount;
+	 
+	}
+	
 	public Authors( String key, String name ){
 		
 		this.birth_date = "";

@@ -27,6 +27,20 @@ public class Books {
     	
     }
     
+    public Books(String key, String title, String author, String publisher, String ISBN, int pageCount, String language, String publishDate, long copieBought) {
+    	this.key = key;
+    	this.title = title;
+    	this.author = author;
+    	this.publisher = publisher;
+    	this.ISBN = ISBN;
+    	this.pageCount = pageCount;
+    	this.language = language;
+    	this.publishDate = publishDate;
+    	
+    	this.copiesBought = copiesBought;
+    	
+    }
+    
     public Books(String key, String title, String author) {
     	this.key = key;
     	this.title = title;
