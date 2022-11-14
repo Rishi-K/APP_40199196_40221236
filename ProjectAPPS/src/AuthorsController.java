@@ -39,7 +39,7 @@ public class AuthorsController implements Controller{
 		// TODO Auto-generated method stub
 		Authors author = (Authors) obj;
 		try {
-			String query = "UPDATE Authors SET name='"+author.getName()+"' , birthDate = '"+ author.getBirthDate()+"' , externalLinks= '"+ author.getLinks() +"' where key='"+author.getKey()+"' ;";
+			String query = "UPDATE Authors SET name='"+author.getName()+"' , birthDate = '"+ author.getBirthDate()+"' , externalLinks= '"+ author.getLinks() +"', saleCount="+author.getSaleCount()+" where key='"+author.getKey()+"' ;";
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);

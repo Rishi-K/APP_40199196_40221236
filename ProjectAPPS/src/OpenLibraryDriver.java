@@ -129,6 +129,8 @@ public class OpenLibraryDriver {
 		User usr = null;
 		UsersController uc = new UsersController();
 		BooksController bkc = new BooksController();
+		AuthorsController ac = new AuthorsController();
+		BuyMapperController bmpc = new BuyMapperController();
 		
 		while(rflag==true) {
 			System.out.println("What do you want to do? Chose option by typing the corresponding number");
@@ -193,7 +195,24 @@ public class OpenLibraryDriver {
 						System.out.println("Book not found");
 					}
 					else {
-						System.out.println(book.getTitle()+" "+ book.getKey()+" "+ book.getAuthor()+" "+ book.getPublisher());
+						System.out.println(book.getTitle()+" written by "+ book.getAuthor());
+						System.out.println("how many copies do you want to buy?");
+						int quantity = Integer.parseInt(scnr.nextLine());
+						
+						
+						usr.buyBook(book, quantity, bmpc, bkc, ac, conn);
+						
+						taut = ct.getTopAuthors(conn);
+						tbk = ct.getTopBooks(conn);
+						
+						if(tbk!=null) {
+							System.out.println("Most popular books are:- ");
+							System.out.println("1. "+tbk.get(0).getTitle()+"\n2. "+tbk.get(1).getTitle()+"\n3. "+tbk.get(2).getTitle());
+							System.out.println();
+							System.out.println("Most popular authors are:- ");
+							System.out.println("1. "+taut.get(0).getName()+"\n2. "+taut.get(1).getName()+"\n3. "+taut.get(2).getName());
+						}
+						
 					}
 					
 					while(bflag==true) {
@@ -211,7 +230,26 @@ public class OpenLibraryDriver {
 								System.out.println("Book not found");
 							}
 							else {
-								System.out.println(book.getTitle()+" "+ book.getKey()+" "+ book.getAuthor()+" "+ book.getPublisher());
+								System.out.println("Following Book was found");
+								System.out.println(book.getTitle()+" written by "+ book.getAuthor());
+								
+								System.out.println("how many copies do you want to buy?");
+								int quantity = Integer.parseInt(scnr.nextLine());
+								
+								
+								usr.buyBook(book, quantity, bmpc, bkc, ac, conn);
+								
+								taut = ct.getTopAuthors(conn);
+								tbk = ct.getTopBooks(conn);
+								
+								if(tbk!=null) {
+									System.out.println("Most popular books are:- ");
+									System.out.println("1. "+tbk.get(0).getTitle()+"\n2. "+tbk.get(1).getTitle()+"\n3. "+tbk.get(2).getTitle());
+									System.out.println();
+									System.out.println("Most popular authors are:- ");
+									System.out.println("1. "+taut.get(0).getName()+"\n2. "+taut.get(1).getName()+"\n3. "+taut.get(2).getName());
+								}
+								
 							}
 						}
 						

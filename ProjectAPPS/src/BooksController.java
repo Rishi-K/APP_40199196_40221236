@@ -43,7 +43,7 @@ public class BooksController implements Controller {
 		Books book = (Books) obj;
 		try {
 			String query1 = "UPDATE Books SET title='"+book.getTitle()+"' , author = '"+ book.getAuthor()+"' , publisher= '"+ book.getPublisher();
-			String query2 = "' , ISBN= '"+ book.getISBN()+"' , pageCount= "+ book.getPageCount()+" , language= '"+ book.getLanguage()+"' , publishDate= '"+ book.getPublishDate();
+			String query2 = "' , ISBN= '"+ book.getISBN()+"' , pageCount= "+ book.getPageCount()+" , copiesBought= "+ book.getCopiesBought()+" , language= '"+ book.getLanguage()+"' , publishDate= '"+ book.getPublishDate();
 			String query3 =	"' where key='"+book.getKey()+"' ;";
 			String query = query1 + query2 + query3;
 			System.out.println(query);
