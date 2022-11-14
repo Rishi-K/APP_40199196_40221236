@@ -19,7 +19,7 @@ public class BuyMapperController {
 			String query = "INSERT INTO BuyMapper( user, book ) VALUES ("+ userId+", '"+ book+"');";
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book buy record inserted");
 			
 		}catch(Exception e) {
 			System.out.println("could not insert data");
@@ -38,10 +38,10 @@ public class BuyMapperController {
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book buy record updated");
 			
 		}catch(Exception e) {
-			System.out.println("could not insert data");
+			System.out.println("could not update data");
 			
 			System.out.println(e.getMessage());
 			return false;
@@ -56,7 +56,7 @@ public class BuyMapperController {
 			String query = "DELETE FROM BuyMapper where user="+userId+" and book='"+book+"';";
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book buy record deleted");
 			
 		}catch(Exception e) {
 			System.out.println("could not delete data");

@@ -25,7 +25,7 @@ public class BooksController implements Controller {
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book inserted");
 			
 		}catch(Exception e) {
 			System.out.println("could not insert data");
@@ -49,10 +49,10 @@ public class BooksController implements Controller {
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book updated");
 			
 		}catch(Exception e) {
-			System.out.println("could not insert data");
+			System.out.println("could not update data");
 			
 			System.out.println(e.getMessage());
 			return false;
@@ -68,7 +68,7 @@ public class BooksController implements Controller {
 			String query = "DELETE FROM Books where key='"+key+"';";
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book deleted");
 			
 		}catch(Exception e) {
 			System.out.println("could not delete data");
@@ -89,6 +89,7 @@ public class BooksController implements Controller {
 				book = new Books(rs.getString("key"),rs.getString("title"), rs.getString("author"), rs.getString("publisher"), rs.getString("ISBN"), rs.getInt("pageCount"), rs.getString("language"), rs.getString("publishDate") );
 				book.setCopiesBought(rs.getLong("copiesBought"));
 			}
+			
 			
 		}catch(Exception e) {
 			System.out.println("could not read data");

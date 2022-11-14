@@ -65,7 +65,7 @@ public class Books {
     public void setLanguage(String language) {
     	this.language = language;
     }
-    public void setISBN(int pageCount) {
+    public void setPageCount(int pageCount) {
     	this.pageCount = pageCount;
     }
     public void setISBN(String ISBN) {

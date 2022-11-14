@@ -22,7 +22,7 @@ public class UsersController implements Controller {
 			String query = "INSERT INTO User( id, name, password ) VALUES ("+ usr.getId()+", '"+ usr.getName()+"', '"+usr.getPassword()+"');";
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("User inserted");
 			
 		}catch(Exception e) {
 			System.out.println("could not insert data");
@@ -42,10 +42,10 @@ public class UsersController implements Controller {
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("User updated");
 			
 		}catch(Exception e) {
-			System.out.println("could not insert data");
+			System.out.println("could not update data");
 			
 			System.out.println(e.getMessage());
 			return false;
@@ -62,7 +62,7 @@ public class UsersController implements Controller {
 			String query = "DELETE FROM User where id="+ikey+";";
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("User deleted");
 			
 		}catch(Exception e) {
 			System.out.println("could not delete data");

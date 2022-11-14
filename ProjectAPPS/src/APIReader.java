@@ -523,8 +523,8 @@ public class APIReader {
 				    	booklist.add((String)editions.get(0)+";"+author);
 //				    	System.out.println(i+" :"+(String)editions.get(0));
 				    }catch(Exception e) {
-				    	System.out.println("error reading JSONObject");
-				    	System.out.println(e.getMessage());
+//				    	System.out.println("error reading JSONObject");
+//				    	System.out.println(e.getMessage());
 				    	continue;
 			    	}		
 			    	

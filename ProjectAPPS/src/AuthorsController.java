@@ -23,7 +23,7 @@ public class AuthorsController implements Controller{
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Author record inserted");
 			
 		}catch(Exception e) {
 			System.out.println("could not insert data");
@@ -43,10 +43,10 @@ public class AuthorsController implements Controller{
 			System.out.println(query);
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Author record updated");
 			
 		}catch(Exception e) {
-			System.out.println("could not insert data");
+			System.out.println("could not update data");
 			
 			System.out.println(e.getMessage());
 			return false;
@@ -62,7 +62,7 @@ public class AuthorsController implements Controller{
 			String query = "DELETE FROM Authors where key='"+key+"';";
 			Statement stmt = conn.createStatement();
 			int rs = stmt.executeUpdate(query);
-			
+			System.out.println("Book buy record deleted");
 			
 		}catch(Exception e) {
 			System.out.println("could not delete data");
