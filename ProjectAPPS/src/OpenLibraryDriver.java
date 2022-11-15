@@ -25,7 +25,7 @@ public class OpenLibraryDriver {
 		Connection c = null;
 		try {
 			SQLiteDataSource ds = new SQLiteDataSource();
-			ds.setUrl("jdbc:sqlite:C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\openlib.db");
+			ds.setUrl("jdbc:sqlite:openlib.db");
 			Connection conn = ds.getConnection();
 			System.out.println("Connection created");
 			return conn;
@@ -44,7 +44,7 @@ public class OpenLibraryDriver {
 		
 		ArrayList<String> authorList = new ArrayList<String>();
 		try {
-		      File myObj = new File("C:\\Users\\Admin\\git\\repository\\ProjectAPPS\\AuthorKeys.txt");
+		      File myObj = new File("AuthorKeys.txt");
 		      Scanner myReader = new Scanner(myObj);
 		      while (myReader.hasNextLine()) {
 		        String data = myReader.nextLine();
@@ -79,14 +79,14 @@ public class OpenLibraryDriver {
 		
 		
 		
-//		ArrayList<String> authorList = OpenLibraryDriver.readAuthorList();
-//		if (authorList.size()==0) {
-//			System.out.println("No author read");
-//		}
-//		else {
-//			System.out.println(authorList.toString());
-//		}
-//		
+		ArrayList<String> authorList = OpenLibraryDriver.readAuthorList();
+		if (authorList.size()==0) {
+			System.out.println("No author read");
+		}
+		else {
+			System.out.println(authorList.toString());
+		}
+		
 		
 		Connection conn = OpenLibraryDriver.getConnection();
 		
