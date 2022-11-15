@@ -34,7 +34,7 @@ public class UsersController implements Controller {
 	}
 	
 	@Override
-	public boolean update(Object obj, String column ,String value, Connection conn) {
+	public boolean update(Object obj, Connection conn) {
 		// TODO Auto-generated method stub
 		User usr = (User) obj;
 		try {

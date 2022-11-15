@@ -16,7 +16,7 @@ class TestAuthorsUpdate {
 		Authors aut = (Authors) ac.read(author.getKey(), conn);
 		
 		aut.setName("Changed Name of Author");
-		ac.update(aut, null, null, conn);
+		ac.update(aut, conn);
 		Authors aut2 = (Authors) ac.read(aut.getKey(), conn);
 		assertEquals("Changed Name of Author", aut2.getName());
 		ac.delete(aut2.getKey(), conn);

@@ -38,7 +38,7 @@ public class BooksController implements Controller {
 	}
 	
 	@Override
-	public boolean update(Object obj, String column ,String value, Connection conn) {
+	public boolean update(Object obj, Connection conn) {
 		// TODO Auto-generated method stub
 		Books book = (Books) obj;
 		try {

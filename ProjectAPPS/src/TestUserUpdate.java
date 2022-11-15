@@ -14,7 +14,7 @@ class TestUserUpdate {
 		uc.insert(usr, conn);
 		User ur = (User) uc.read(Integer.toString(usr.getId()), conn);
 		ur.setPassword("ChangedPassword");
-		uc.update(ur, null, null, conn);
+		uc.update(ur, conn);
 		User ur2 = (User) uc.read(Integer.toString(ur.getId()), conn);
 		assertEquals("ChangedPassword", ur2.getPassword());
 		uc.delete(Integer.toString(ur.getId()), conn);

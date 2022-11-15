@@ -51,12 +51,12 @@ public class User {
     	bmpc.insert(book.getKey(), this.id, conn);
     	
     	book.setCopiesBought(book.getCopiesBought()+ quantity);
-    	bkc.update( book , null, null, conn);
+    	bkc.update( book , conn);
     	
     	Authors aut = (Authors) ac.read(book.getAuthor(), conn);
     	aut.setSaleCount(aut.getSaleCount()+quantity);
     	
-    	ac.update(aut, null, null, conn);
+    	ac.update(aut, conn);
     	
     	ct.update(conn);
     	

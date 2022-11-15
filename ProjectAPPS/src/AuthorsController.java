@@ -35,7 +35,7 @@ public class AuthorsController implements Controller{
 	}
 	
 	@Override
-	public boolean update(Object obj, String column, String value, Connection conn) {
+	public boolean update(Object obj,Connection conn) {
 		// TODO Auto-generated method stub
 		Authors author = (Authors) obj;
 		try {

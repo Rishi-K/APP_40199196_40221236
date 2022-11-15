@@ -15,7 +15,7 @@ class TestBooksUpdate {
 		bkc.insert(book, conn);
 		Books bk = (Books) bkc.read(book.getKey(), conn);
 		bk.setAuthor("ChangedAuthor");
-		bkc.update(bk, null, null, conn);
+		bkc.update(bk, conn);
 		Books bk2 = (Books) bkc.read(bk.getKey(), conn);
 		assertEquals("ChangedAuthor", bk2.getAuthor());
 		bkc.delete(bk2.getKey(), conn);
